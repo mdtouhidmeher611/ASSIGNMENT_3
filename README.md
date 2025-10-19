@@ -34,4 +34,4 @@ A clean, refactored version of a student grade calculation program following Cle
 
 ## Git Commit History
 
-See `git_log.txt` for complete commit history showing the refactoring process.
+See "assignment_3_ss1.PNG" & "assignment_3_ss2.PNG" for complete commit history showing the refactoring process.
