@@ -8,6 +8,7 @@ void calculateAndDisplayGrades(int marks[][NUM_SUBJECTS], char names[][10]);
 int calculateTotal(int marks[]);
 char determineGrade(float average);
 void displayTopper(int marks[][NUM_SUBJECTS], char names[][10]);
+void displayHeader();
 
 int main() {
     // Student data: marks for 3 subjects and names
@@ -18,10 +19,9 @@ int main() {
     };
     char names[NUM_STUDENTS][10] = {"Ali", "Bob", "Cat"};
     
-    // Calculate and display grades for all students
+    displayHeader();
     calculateAndDisplayGrades(marks, names);
-    
-    // Find and display the topper
+    printf("\n");
     displayTopper(marks, names);
     
     return 0;
@@ -44,13 +44,22 @@ char determineGrade(float average) {
     return 'F';  // Fail
 }
 
+// Display header for the grade report
+void displayHeader() {
+    printf("========================================\n");
+    printf("         STUDENT GRADE REPORT\n");
+    printf("========================================\n");
+    printf("Name     Total   Average  Grade\n");
+    printf("-------- ------- -------- -----\n");
+}
+
 // Calculate and display grades for all students
 void calculateAndDisplayGrades(int marks[][NUM_SUBJECTS], char names[][10]) {
     for (int i = 0; i < NUM_STUDENTS; i++) {
         int total = calculateTotal(marks[i]);
         float average = total / (float)NUM_SUBJECTS;
         char grade = determineGrade(average);
-        printf("%s Grade %c avg=%.2f\n", names[i], grade, average);
+        printf("%-8s %-7d %-8.2f %c\n", names[i], total, average, grade);
     }
 }
 
@@ -66,5 +75,9 @@ void displayTopper(int marks[][NUM_SUBJECTS], char names[][10]) {
         }
     }
     
-    printf("Topper: %s with total %d\n", names[topperIndex], maxTotal);
+    printf("----------------------------------------\n");
+    printf(" TOPPER: %s\n", names[topperIndex]);
+    printf(" Total Marks: %d\n", maxTotal);
+    printf(" Average: %.2f\n", maxTotal / (float)NUM_SUBJECTS);
+    printf("========================================\n");
 }
