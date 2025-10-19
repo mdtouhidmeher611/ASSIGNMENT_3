@@ -1,65 +1,70 @@
-#include<stdio.h>
+#include <stdio.h>
 
 #define NUM_STUDENTS 3
 #define NUM_SUBJECTS 3
 
+// Function declarations
 void calculateAndDisplayGrades(int marks[][NUM_SUBJECTS], char names[][10]);
-int calculateTotalMarks(int student_marks[]);
+int calculateTotal(int marks[]);
 char determineGrade(float average);
-void findAndDisplayTopper(int marks[][NUM_SUBJECTS], char names[][10]);
+void displayTopper(int marks[][NUM_SUBJECTS], char names[][10]);
 
 int main() {
-    int marks[NUM_STUDENTS][NUM_SUBJECTS] = {{50, 60, 70}, {80, 90, 100}, {30, 40, 50}};
+    // Student data: marks for 3 subjects and names
+    int marks[NUM_STUDENTS][NUM_SUBJECTS] = {
+        {50, 60, 70},  // Ali's marks
+        {80, 90, 100}, // Bob's marks
+        {30, 40, 50}   // Cat's marks
+    };
     char names[NUM_STUDENTS][10] = {"Ali", "Bob", "Cat"};
     
+    // Calculate and display grades for all students
     calculateAndDisplayGrades(marks, names);
-    findAndDisplayTopper(marks, names);
+    
+    // Find and display the topper
+    displayTopper(marks, names);
     
     return 0;
 }
 
-int calculateTotalMarks(int student_marks[]) {
+// Calculate total marks for a student
+int calculateTotal(int marks[]) {
     int total = 0;
-    for(int subject_index = 0; subject_index < NUM_SUBJECTS; subject_index++) {
-        total += student_marks[subject_index];
+    for (int i = 0; i < NUM_SUBJECTS; i++) {
+        total += marks[i];
     }
     return total;
 }
 
+// Determine grade based on average marks
 char determineGrade(float average) {
-    if(average >= 80) return 'A';
-    else if(average >= 60) return 'B';
-    else if(average >= 40) return 'C';
-    else return 'F';
+    if (average >= 80) return 'A';
+    if (average >= 60) return 'B';
+    if (average >= 40) return 'C';
+    return 'F';  // Fail
 }
 
+// Calculate and display grades for all students
 void calculateAndDisplayGrades(int marks[][NUM_SUBJECTS], char names[][10]) {
-    int total_marks;
-    float average_marks;
-    char grade;
-    
-    for(int student_index = 0; student_index < NUM_STUDENTS; student_index++) {
-        total_marks = calculateTotalMarks(marks[student_index]);
-        average_marks = total_marks / (float)NUM_SUBJECTS;
-        grade = determineGrade(average_marks);
-        
-        printf("%s Grade %c avg=%.2f\n", names[student_index], grade, average_marks);
+    for (int i = 0; i < NUM_STUDENTS; i++) {
+        int total = calculateTotal(marks[i]);
+        float average = total / (float)NUM_SUBJECTS;
+        char grade = determineGrade(average);
+        printf("%s Grade %c avg=%.2f\n", names[i], grade, average);
     }
 }
 
-void findAndDisplayTopper(int marks[][NUM_SUBJECTS], char names[][10]) {
-    int max_total = 0;
-    int topper_index = 0;
-    int current_total;
+// Find and display student with highest total marks
+void displayTopper(int marks[][NUM_SUBJECTS], char names[][10]) {
+    int maxTotal = 0, topperIndex = 0;
     
-    for(int student_index = 0; student_index < NUM_STUDENTS; student_index++) {
-        current_total = calculateTotalMarks(marks[student_index]);
-        
-        if(current_total > max_total) {
-            max_total = current_total;
-            topper_index = student_index;
+    for (int i = 0; i < NUM_STUDENTS; i++) {
+        int total = calculateTotal(marks[i]);
+        if (total > maxTotal) {
+            maxTotal = total;
+            topperIndex = i;
         }
     }
     
-    printf("Topper: %s with total %d\n", names[topper_index], max_total);
+    printf("Topper: %s with total %d\n", names[topperIndex], maxTotal);
 }
